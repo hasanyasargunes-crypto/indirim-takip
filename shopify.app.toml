@@ -1,8 +1,11 @@
 # Shopify App Configuration
 # Learn more: https://shopify.dev/docs/apps/tools/cli/configuration
 
+client_id = "d3582715dc56f49fe11754cf2ecbc3df"
 name = "İndirim Takip"
 handle = "indirim-takip"
+application_url = "https://indirim-takip.vercel.app"
+embedded = true
 
 [access_scopes]
 scopes = "read_products,write_products"
@@ -15,29 +18,27 @@ redirect_urls = [
 ]
 
 [webhooks]
-api_version = "2025-04"
+api_version = "2025-07"
 
   [webhooks.privacy_compliance]
-  customer_data_request_url = "/webhooks/privacy/customer-data-request"
-  customer_deletion_url = "/webhooks/privacy/customer-redact"
-  shop_deletion_url = "/webhooks/privacy/shop-redact"
+  customer_data_request_url = "https://indirim-takip.vercel.app/webhooks/privacy/customer-data-request"
+  customer_deletion_url = "https://indirim-takip.vercel.app/webhooks/privacy/customer-redact"
+  shop_deletion_url = "https://indirim-takip.vercel.app/webhooks/privacy/shop-redact"
 
 [[webhooks.subscriptions]]
 topics = ["products/update"]
-uri = "/webhooks/products-update"
-include_fields = ["variants"]
+uri = "https://indirim-takip.vercel.app/webhooks/products-update"
 
 [[webhooks.subscriptions]]
 topics = ["products/create"]
-uri = "/webhooks/products-update"
-include_fields = ["variants"]
+uri = "https://indirim-takip.vercel.app/webhooks/products-update"
 
 [[webhooks.subscriptions]]
 topics = ["app/uninstalled"]
-uri = "/webhooks/app-uninstalled"
+uri = "https://indirim-takip.vercel.app/webhooks/app-uninstalled"
 
 [app_proxy]
-url = "/api/proxy"
+url = "https://indirim-takip.vercel.app/api/proxy"
 subpath = "indirim-takip"
 prefix = "apps"
 
@@ -46,4 +47,4 @@ embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = ""
+dev_store_url = "deneme-1lcwi6dj.myshopify.com"

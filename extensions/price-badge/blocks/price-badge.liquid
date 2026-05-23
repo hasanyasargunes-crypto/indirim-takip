@@ -9,19 +9,11 @@
 
 {%- liquid
   assign lowest_price = product.metafields['app--price-tracker']['lowest_price_30d'].value
-  assign lowest_date = product.metafields['app--price-tracker']['lowest_price_date'].value
-  assign current_price = product.selected_or_first_available_variant.price
 -%}
 
 {%- if lowest_price != blank and block.settings.badge_enabled -%}
   {%- liquid
-    assign lowest_price_money = lowest_price | times: 100 | money
     assign show_badge = false
-
-    comment
-      Only show badge if the product is currently on sale
-      (compare_at_price is set) or if current price differs from lowest
-    endcomment
 
     if product.selected_or_first_available_variant.compare_at_price != blank
       assign show_badge = true

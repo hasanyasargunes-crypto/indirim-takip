@@ -1,0 +1,15 @@
+{
+  "indirim_rozeti": {
+    "name": "Discount Badge",
+    "badge_enabled": "Show badge",
+    "always_show": "Always show",
+    "badge_text": "Badge text",
+    "text_color": "Text color",
+    "bg_color": "Background color",
+    "font_size": "Font size",
+    "padding": "Padding",
+    "border_radius": "Border radius",
+    "margin_top": "Top margin",
+    "margin_bottom": "Bottom margin"
+  }
+}

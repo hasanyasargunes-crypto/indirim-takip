@@ -1,0 +1,15 @@
+{
+  "indirim_rozeti": {
+    "name": "Indirim Rozeti",
+    "badge_enabled": "Rozeti goster",
+    "always_show": "Her zaman goster",
+    "badge_text": "Rozet metni",
+    "text_color": "Yazi rengi",
+    "bg_color": "Arka plan rengi",
+    "font_size": "Yazi boyutu",
+    "padding": "Ic bosluk",
+    "border_radius": "Kose yuvarlakligi",
+    "margin_top": "Ust bosluk",
+    "margin_bottom": "Alt bosluk"
+  }
+}

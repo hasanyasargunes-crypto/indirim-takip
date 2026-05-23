@@ -2,6 +2,7 @@
 # Learn more: https://shopify.dev/docs/apps/online-store/theme-app-extensions
 
 api_version = "2025-04"
+uid = "d6fbe274-d490-d4dd-5074-429d3249f2969f41c624"
 
 [[extensions]]
 name = "Indirim Rozeti"
