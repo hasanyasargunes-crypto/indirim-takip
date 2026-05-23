@@ -1,27 +1,10 @@
 {
   "buildCommand": "npm run setup && npm run build",
-  "outputDirectory": "build/client",
   "installCommand": "npm install",
-  "framework": null,
-  "functions": {
-    "build/server/**/*.js": {
-      "maxDuration": 30
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/build/server/index.js"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Frame-Options",
-          "value": "ALLOW-FROM https://*.myshopify.com"
-        },
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors https://*.myshopify.com https://admin.shopify.com"
