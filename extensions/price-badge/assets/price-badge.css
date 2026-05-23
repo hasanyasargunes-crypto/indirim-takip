@@ -1,0 +1,24 @@
+/* Indirim Takip - Price Badge Styles */
+/* Minimal CSS to avoid storefront performance impact */
+
+.indirim-takip-badge {
+  font-family: inherit;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.indirim-takip-badge__text {
+  margin-right: 4px;
+}
+
+.indirim-takip-badge__price {
+  white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 749px) {
+  .indirim-takip-badge {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
+}

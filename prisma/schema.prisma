@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Shopify session storage (required by @shopify/shopify-app-session-storage-prisma)
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String?
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+
+  @@index([shop])
+}
+
+// Store-level settings for the price badge
+model ShopSettings {
+  id              String   @id @default(cuid())
+  shop            String   @unique
+  badgeEnabled    Boolean  @default(true)
+  badgeText       String   @default("Son 30 gunun en dusuk fiyati:")
+  badgeTextEn     String   @default("Lowest price in 30 days:")
+  badgeColor      String   @default("#1a1a1a")
+  badgeBgColor    String   @default("#fff3cd")
+  badgePosition   String   @default("below_price") // below_price, above_add_to_cart, custom
+  currency        String   @default("TRY")
+  language        String   @default("tr")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([shop])
+}
+
+// Price history for each product variant
+model PriceHistory {
+  id          String   @id @default(cuid())
+  shop        String
+  productId   String   // Shopify Product GID
+  variantId   String   // Shopify Variant GID
+  price       Decimal  @db.Decimal(10, 2)
+  currency    String   @default("TRY")
+  recordedAt  DateTime @default(now())
+
+  @@index([shop, variantId])
+  @@index([shop, productId])
+  @@index([recordedAt])
+  @@index([shop, variantId, recordedAt])
+}
+
+// Track which products have been synced (for bulk operations)
+model ProductSyncStatus {
+  id              String   @id @default(cuid())
+  shop            String
+  productId       String   // Shopify Product GID
+  lastSyncedAt    DateTime @default(now())
+  lowestPrice30d  Decimal? @db.Decimal(10, 2)
+  metafieldSynced Boolean  @default(false)
+
+  @@unique([shop, productId])
+  @@index([shop])
+}

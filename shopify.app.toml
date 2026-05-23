@@ -1,0 +1,49 @@
+# Shopify App Configuration
+# Learn more: https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "İndirim Takip"
+handle = "indirim-takip"
+
+[access_scopes]
+scopes = "read_products,write_products"
+
+[auth]
+redirect_urls = [
+  "https://indirim-takip.vercel.app/auth/callback",
+  "https://indirim-takip.vercel.app/auth/shopify/callback",
+  "https://indirim-takip.vercel.app/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2025-04"
+
+  [webhooks.privacy_compliance]
+  customer_data_request_url = "/webhooks/privacy/customer-data-request"
+  customer_deletion_url = "/webhooks/privacy/customer-redact"
+  shop_deletion_url = "/webhooks/privacy/shop-redact"
+
+[[webhooks.subscriptions]]
+topics = ["products/update"]
+uri = "/webhooks/products-update"
+include_fields = ["variants"]
+
+[[webhooks.subscriptions]]
+topics = ["products/create"]
+uri = "/webhooks/products-update"
+include_fields = ["variants"]
+
+[[webhooks.subscriptions]]
+topics = ["app/uninstalled"]
+uri = "/webhooks/app-uninstalled"
+
+[app_proxy]
+url = "/api/proxy"
+subpath = "indirim-takip"
+prefix = "apps"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = ""

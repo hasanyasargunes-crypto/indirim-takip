@@ -1,0 +1,149 @@
+{%- comment -%}
+  Indirim Takip - 30 Gunluk En Dusuk Fiyat Rozeti
+  AB Omnibus Direktifi & Turkiye Ticaret Bakanligi uyumlu
+
+  This App Block reads the lowest 30-day price from product metafields
+  and displays it as a badge on the product page.
+  No external API calls = zero performance impact.
+{%- endcomment -%}
+
+{%- liquid
+  assign lowest_price = product.metafields['app--price-tracker']['lowest_price_30d'].value
+  assign lowest_date = product.metafields['app--price-tracker']['lowest_price_date'].value
+  assign current_price = product.selected_or_first_available_variant.price
+-%}
+
+{%- if lowest_price != blank and block.settings.badge_enabled -%}
+  {%- liquid
+    assign lowest_price_money = lowest_price | times: 100 | money
+    assign show_badge = false
+
+    comment
+      Only show badge if the product is currently on sale
+      (compare_at_price is set) or if current price differs from lowest
+    endcomment
+
+    if product.selected_or_first_available_variant.compare_at_price != blank
+      assign show_badge = true
+    endif
+
+    if block.settings.always_show
+      assign show_badge = true
+    endif
+  -%}
+
+  {%- if show_badge -%}
+    <div
+      class="indirim-takip-badge"
+      style="
+        background-color: {{ block.settings.bg_color }};
+        color: {{ block.settings.text_color }};
+        padding: {{ block.settings.padding }}px;
+        border-radius: {{ block.settings.border_radius }}px;
+        font-size: {{ block.settings.font_size }}px;
+        margin: {{ block.settings.margin_top }}px 0 {{ block.settings.margin_bottom }}px 0;
+        display: inline-block;
+        max-width: 100%;
+        line-height: 1.4;
+      "
+    >
+      <span class="indirim-takip-badge__text">
+        {{ block.settings.badge_text }}
+      </span>
+      <strong class="indirim-takip-badge__price">
+        {{ lowest_price | times: 100 | money }}
+      </strong>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Indirim Rozeti",
+  "target": "section",
+  "templates": ["product"],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "badge_enabled",
+      "label": "Rozeti goster",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "always_show",
+      "label": "Her zaman goster (indirim olmasa bile)",
+      "default": false,
+      "info": "Aktif edildiginde, indirim olsun olmasin her urun sayfasinda rozet gosterilir."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Rozet metni",
+      "default": "Son 30 gunun en dusuk fiyati:"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Yazi rengi",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Arka plan rengi",
+      "default": "#fff3cd"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Yazi boyutu",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 13,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Ic bosluk",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Kose yuvarlakligi",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 6,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Ust bosluk",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Alt bosluk",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "default": 8,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}

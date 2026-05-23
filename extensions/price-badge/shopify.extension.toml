@@ -1,0 +1,12 @@
+# Theme App Extension configuration
+# Learn more: https://shopify.dev/docs/apps/online-store/theme-app-extensions
+
+api_version = "2025-04"
+
+[[extensions]]
+name = "Indirim Rozeti"
+handle = "price-badge"
+type = "theme"
+
+  [extensions.capabilities]
+  app_embed = true
